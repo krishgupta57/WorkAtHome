@@ -1,31 +1,33 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCredentials, logout as logoutAction, updateUser } from "../store/slices/authSlice";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) setUser(storedUser);
-  }, []);
-
-  const login = (userData) => {
-    localStorage.setItem("user", JSON.stringify(userData));
-    setUser(userData); // auto update navbar
+  const login = (userData, access) => {
+    dispatch(setCredentials({ user: userData, access }));
   };
 
   const logout = () => {
-    localStorage.removeItem("user");
-    setUser(null); //auto update navbar
+    dispatch(logoutAction());
+  };
+
+  const update = (updatedData) => {
+    dispatch(updateUser(updatedData));
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, token, isAuthenticated, login, logout, update }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => useContext(AuthContext);
+export default AuthContext;
