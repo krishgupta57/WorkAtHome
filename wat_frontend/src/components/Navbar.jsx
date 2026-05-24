@@ -46,7 +46,7 @@ function Navbar() {
               onClick={() => setOpen(!open)}
               className="cursor-pointer bg-black text-white w-10 h-10 flex items-center justify-center rounded-full"
             >
-              {user.name.charAt(0).toUpperCase()}
+              {(user.name || user.email || "U").charAt(0).toUpperCase()}
             </div>
 
             
@@ -54,7 +54,7 @@ function Navbar() {
               <div className="absolute right-0 mt-3 w-48 bg-white shadow-lg rounded-xl p-3">
 
                 <p className="font-semibold mb-2">
-                  {user.name}
+                  {user.name || user.email || "User"}
                 </p>
 
                 <Link
