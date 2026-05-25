@@ -595,7 +595,6 @@ function AdminDashboard() {
       </div>
 
       {/* --- FLOATING DETAILED BOOKING INSPECT MODAL --- */}
-      
       {inspectBooking && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-6 animate-in fade-in duration-200">
           <div className="bg-white rounded-[36px] max-w-lg w-full overflow-hidden shadow-2xl animate-in scale-in duration-200 border border-gray-100">
